@@ -6,35 +6,42 @@
             <h1 class="h2">Cotistas da AL</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                    <a href="/cotistas/novo" type="button" class="btn btn-sm btn-outline-secondary" >Novo Cotista</a>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                    <span data-feather="calendar"></span>
-                    This week
-                </button>
             </div>
         </div>
-        <h2>Listagem de Cotistas</h2>
+        <h2>Listagem de Cotistas <i class="fas fa-edit"></i> <i class="fas fa-trash-alt"></i></h2>
+
+        @if(!empty($mensagem))
+            <div class="alert alert-sucess">
+                {{$mensagem}}
+            </div>
+        @endif
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
+                    <th scope="col">Código SNI</th>
+                    <th scope="col">Nome Cotista</th>
+                    <th scope="col">Quantidade das Cotas</th>
+                    <th scope="col">Associação Local</th>
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($cotistas as $cotista)
                 <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
+                    <td>{{$cotista->cod_sni}}</td>
+                    <td>{{$cotista->nome}}</td>
+                    <td>{{$cotista->cota_revistas}}</td>
+                    <td>{{$cotista->al_id}}</td>
+                    <td>
+                        <form method="post" action="/cotista/remover/{{$cotista->cod_sni}}">
+                            @csrf
+                            <button class="btn btn-danger"> <i class="fas fa-edit"></i> <i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
                 </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
